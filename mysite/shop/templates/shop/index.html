@@ -1,0 +1,371 @@
+{% extends 'shop/basic.html' %}
+{% block title%} SHOP{% endblock %}
+{% block css %}
+
+
+.col-md-3
+{
+display: inline-block;
+margin-left:-4px;
+max-width: 24%;
+
+}
+
+
+.carousel-indicators .active {
+background-color: blue;
+}
+h1{
+color:green
+}
+body{
+background: linear-gradient(to bottom left, #ff0000 0%, #6600ff 100%);
+}
+
+
+.col-md-3 img{
+
+max-width:233px;
+max-height:380px;
+min-height:380px;
+}
+
+body .carousel-indicator li{
+background-color: blue;
+}
+
+body .carousel-indicators{
+bottom: 0;
+}
+
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+background-color: blue;
+}
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+padding-top: 287px;
+bottom: auto;
+}
+.card{
+position: relative;
+margin-left:-32px;
+}
+body .no-padding{
+padding-left: 0px,
+padding-right:50px;
+}
+body .price{
+
+}
+.card-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.card-carousel .my-card {
+  height: 20rem;
+  width: 12rem;
+  position: relative;
+  z-index: 1;
+  -webkit-transform: scale(0.6) translateY(-2rem);
+  transform: scale(0.6) translateY(-2rem);
+  opacity: 0;
+  cursor: pointer;
+  pointer-events: none;
+  background: #2e5266;
+  background: linear-gradient(to top, #2e5266, #6e8898);
+  transition: 1s;
+}
+
+.card-carousel .my-card:after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  border-radius: 100%;
+  background-color: rgba(0,0,0,0.3);
+  bottom: -5rem;
+  -webkit-filter: blur(4px);
+  filter: blur(4px);
+}
+
+.card-carousel .my-card.active {
+  z-index: 3;
+  -webkit-transform: scale(1) translateY(0) translateX(0);
+  transform: scale(1) translateY(0) translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+  transition: 1s;
+}
+
+.card-carousel .my-card.prev, .card-carousel .my-card.next {
+  z-index: 2;
+  -webkit-transform: scale(0.8) translateY(-1rem) translateX(0);
+  transform: scale(0.8) translateY(-1rem) translateX(0);
+  opacity: 0.6;
+  pointer-events: auto;
+  transition: 1s;
+}
+.card-carousel .my-card:nth-child(0):before {
+  content: '0';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 3rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.card-carousel .my-card:nth-child(1):before {
+  content: '1';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 3rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.card-carousel .my-card:nth-child(2):before {
+  content: '2';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 3rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.card-carousel .my-card:nth-child(3):before {
+  content: '3';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 3rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.card-carousel .my-card:nth-child(4):before {
+  content: '4';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 3rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container">
+    {% for product, range, nSlides in allProds %}
+    <h1 class="my-4">Flash Sale On {{product.0.category}}- Recommended for you</h1>
+    <div class="row">
+        <div class=" col carousel slide my-3" data-ride="carousel" id="demo{{forloop.counter}}">
+            <ul class="carousel-indicators">
+                <li class="active" data-slide-to="0" data-target="#demo{{forloop.counter}}"></li>
+
+                {% for i in range %}
+                <li data-slide-to="{{i}}" data-target="#demo{{forloop.parentloop.counter}}"></li>
+                {% endfor%}
+            </ul>
+
+            <!--Slideshow starts here -->
+<div class="container carousel-inner no-padding ">
+
+                    <div class="carousel-item active">
+                        {% for i in product %}
+                        <div class="col-xs-3 col-sm-3 col-md-3  mx-0 ">
+                            <div class="card align-items-center" style="width: 17 rem;">
+                                <img alt="..." class="card-img-top" src='/media/{{i.image}}'>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="namepr{{i.id}}">
+                                        <!--{{forloop.parentloop.counter}}.-->{{forloop.counter}}.{{i.product_name|slice:"0:29"}}...</h5>
+                                    <p class="card-text">{{i.desc|slice:"0:50"}}...</p>
+                                    <p class="card-text price"><b>&#x20b9 {{i.price}}.</b></p>
+                                    <span class="divpr" id="divpr{{i.id}}">
+                                      <button class="btn btn-primary cart" id="pr{{i.id}}">Add to Cart</button></span>
+                                    <a href="/shop/products/{{i.id}}">
+                                    <button class="btn btn-primary cart" id="qv{{i.id}}">Quick View</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last%}
+                    </div>
+                    <div class="carousel-item">
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        <!-- left and right controls for the slide -->
+        <a class="carousel-control-prev" data-slide="prev" href="#demo{{forloop.counter}}">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" data-slide="next" href="#demo{{forloop.counter}}">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+    {% endfor%}
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML= Object.keys(cart).length;
+    updateCart(cart);
+}
+//$('.cart').click(function()
+$('.divpr').on('click','button.cart',function()
+{
+    var idstr = this.id.toString();
+    if (cart[idstr] != undefined) {
+        qty=cart[idstr][0] + 1;
+
+        cart[idstr]=[qty,name];
+    } else {
+         qty= 1;
+        name = document.getElementById('name'+idstr).innerHTML;
+        console.log(name);
+        cart[idstr] = [qty,name];
+    }
+    updateCart(cart);
+
+});
+
+//Add Popover to cart
+$('#popcart').popover();
+updatePopover(cart);
+function updatePopover(cart)
+{
+
+    var popStr = "";
+    popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+    var i = 1;
+    for (var item in cart){
+        popStr = popStr + "<b>" + i + "</b>. ";
+        popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+        i = i+1;
+    }
+
+        popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+
+    console.log(popStr);
+
+    document.getElementById('popcart').setAttribute('data-content', popStr);
+    $('#popcart').popover('show');
+}
+
+function clearCart()
+{
+  cart = JSON.parse(localStorage.getItem('cart'));
+  for(var item in cart)
+  {
+    document.getElementById('div' + item).innerHTML='<button id="'+item+'" class="btn btn-primary cart">Add to Cart</button>'
+  }
+  localStorage.clear();
+  cart={};
+  updateCart(cart);
+}
+
+function updateCart(cart) {
+    var sum=0;
+    for (var item in cart) {
+    sum+=cart[item][0];
+    //console.log(item);
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = sum;
+    updatePopover(cart);
+}
+// If plus or minus button is clicked, change the cart as well as the display value
+$('.divpr').on("click", "button.minus", function() {
+    a = this.id.slice(7, );
+
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    updateCart(cart);
+});
+$('.divpr').on("click", "button.plus", function() {
+    console.log(a);
+    a = this.id.slice(6, );
+
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    updateCart(cart)
+});
+
+$num = $('.my-card').length;
+$even = $num / 2;
+$odd = ($num + 1) / 2;
+
+if ($num % 2 == 0) {
+  $('.my-card:nth-child(' + $even + ')').addClass('active');
+  $('.my-card:nth-child(' + $even + ')').prev().addClass('prev');
+  $('.my-card:nth-child(' + $even + ')').next().addClass('next');
+} else {
+  $('.my-card:nth-child(' + $odd + ')').addClass('active');
+  $('.my-card:nth-child(' + $odd + ')').prev().addClass('prev');
+  $('.my-card:nth-child(' + $odd + ')').next().addClass('next');
+}
+
+$('.my-card').click(function() {
+  $slide = $('.active').width();
+  console.log($('.active').position().left);
+
+  if ($(this).hasClass('next')) {
+    $('.card-carousel').stop(false, true).animate({left: '-=' + $slide});
+  } else if ($(this).hasClass('prev')) {
+    $('.card-carousel').stop(false, true).animate({left: '+=' + $slide});
+  }
+
+  $(this).removeClass('prev next');
+  $(this).siblings().removeClass('prev active next');
+
+  $(this).addClass('active');
+  $(this).prev().addClass('prev');
+  $(this).next().addClass('next');
+});
+
+
+// Keyboard nav
+$('html body').keydown(function(e) {
+  if (e.keyCode == 37) { // left
+    $('.active').prev().trigger('click');
+  }
+  else if (e.keyCode == 39) { // right
+    $('.active').next().trigger('click');
+  }
+});
+
+
+
+</script>
+
+
+{% endblock %}
